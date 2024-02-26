@@ -37,7 +37,7 @@ func (h *Handler) GetTokens(c *gin.Context) {
 		})
 		return
 	}
-	accessToken, err := h.service.GenerateAccessToken(refreshToken)
+	accessToken, err := h.service.GenerateAccessToken(userId, refreshToken)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
@@ -70,7 +70,7 @@ func (h *Handler) RefreshTokens(c *gin.Context) {
 		})
 		return
 	}
-	if refreshTokenFromHeader != parseToken {
+	if userId+refreshTokenFromHeader != parseToken {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"error": err.Error(),
 		})
@@ -90,7 +90,7 @@ func (h *Handler) RefreshTokens(c *gin.Context) {
 		})
 		return
 	}
-	accessToken, err := h.service.GenerateAccessToken(userId)
+	accessToken, err := h.service.GenerateAccessToken(userId, refreshTokenFromHeader)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),

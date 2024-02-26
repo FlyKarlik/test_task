@@ -48,9 +48,9 @@ func (a *AuthService) GenerateRefreshToken() (string, error) {
 
 	return refreshToken, nil
 }
-func (a *AuthService) GenerateAccessToken(id string) (string, error) {
+func (a *AuthService) GenerateAccessToken(id string, refreshToken string) (string, error) {
 	claims := &TokenClaims{
-		UserId: id,
+		UserId: id + refreshToken,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(tokenTTL).Unix(),
 			IssuedAt:  time.Now().Unix(),
