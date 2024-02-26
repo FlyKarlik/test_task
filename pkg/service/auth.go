@@ -99,7 +99,3 @@ func (a *AuthService) ParseAccessToken(accessToken string) (string, error) {
 	}
 	return "", fmt.Errorf("invalid token")
 }
-
-func (a *AuthService) GenerateNonce() (string, error) {
-
-}
