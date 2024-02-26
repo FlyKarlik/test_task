@@ -1,0 +1,7 @@
+db:
+    database_name: "test_task"
+    collection: "users"
+    port: "27017"
+    user: "nikitasavin"
+
+port: "8080"    
