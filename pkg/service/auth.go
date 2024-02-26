@@ -15,7 +15,6 @@ import (
 
 const (
 	tokenTTL = time.Hour * 1
-	Salt     = "sdjas0dj0d3jd1jj"
 )
 
 type TokenClaims struct {
@@ -47,7 +46,7 @@ func (a *AuthService) GenerateRefreshToken() (string, error) {
 	}
 	refreshToken := base64.StdEncoding.EncodeToString(tokenBytes)
 
-	return refreshToken + Salt, nil
+	return refreshToken, nil
 }
 func (a *AuthService) GenerateAccessToken(id string) (string, error) {
 	claims := &TokenClaims{
