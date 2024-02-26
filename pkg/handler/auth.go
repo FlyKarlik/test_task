@@ -80,7 +80,7 @@ func (h *Handler) RefreshTokens(c *gin.Context) {
 	user, err := h.service.GetUserById(userId)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-			"error": "user not found",
+			"error": err.Error(),
 		})
 		return
 	}
@@ -93,7 +93,7 @@ func (h *Handler) RefreshTokens(c *gin.Context) {
 	accessToken, err := h.service.GenerateAccessToken(userId)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": "could not generate access token",
+			"error": err.Error(),
 		})
 		return
 	}
@@ -101,13 +101,13 @@ func (h *Handler) RefreshTokens(c *gin.Context) {
 	refreshToken, err := h.service.GenerateRefreshToken()
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": "could not generate refresh token",
+			"error": err.Error(),
 		})
 		return
 	}
 	if err := h.service.UpdateRefreshToken(userId, refreshToken); err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
-			"error": "could not save refresh token in database",
+			"error": err.Error(),
 		})
 		return
 	}
